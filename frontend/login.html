@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login Users</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+        <style>
+            .a{
+                text-decoration: none !important;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="email" name="email" placeholder="Email" required /><br><br>
+            <input type="password" name="password" placeholder="Password" required /><br><br>
+            <button type="submit">Login</button>
+        </form>
+        <p>If don't have account, than <a href="register.html" class="a">Register here</a> </p>
+        <script>
+            document.getElementById("loginForm").addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const email = e.target.email.value;
+                const password = e.target.password.value;
+
+                const res = await fetch("http://localhost:5000/api/auth/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+
+                if (data.token) {
+                    localStorage.setItem("token", data.token);
+                    localStorage.setItem("currentUserId", data.user.id);
+                    alert("Login successful :) ...");
+                    window.location.href = "profile.html";
+                } 
+                else {
+                    alert(data.error);
+                }
+            });
+        </script>
+    </body>
+</html>

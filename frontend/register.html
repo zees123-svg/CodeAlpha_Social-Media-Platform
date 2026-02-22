@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Register Users</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    </head>
+    <body>
+        <h2>Register</h2>
+        <form id="registerForm">
+            <input type="text" name="username" placeholder="Username" required /><br><br>
+            <input type="email" name="email" placeholder="Email" required /><br><br>
+            <input type="password" name="password" placeholder="Password" required /><br><br>
+            <button type="submit">Register</button>
+        </form>
+        <p>If already have account, than <a href="login.html" class="a">Login here</a> </p>
+
+        <script>
+            document.getElementById("registerForm").addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                const username = e.target.username.value;
+                const email = e.target.email.value;
+                const password = e.target.password.value;
+
+                try {
+                    const res = await fetch("http://localhost:5000/api/auth/register", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ username, email, password })
+                    });
+
+                    const data = await res.json();
+
+                    if (res.ok) {
+                        alert("Registration successful :) ...");
+            
+                        setTimeout(() => {
+                            window.location.href = "login.html";
+                        }, 1000);
+
+                    } 
+                    else {
+                        alert(data.error || "Registration failed ...");
+                    }
+
+                } 
+                catch (error) {
+                    alert("Server error. Please try again...");
+                    console.error(error);
+                }
+            });
+        </script>
+    </body>
+</html>

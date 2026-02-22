@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mini Social Media Platform</title>
+        <link rel="stylesheet" href="profile.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    </head>
+    <body>
+        <div id="profile">
+            <h2 id="username"></h2>
+            <p id="bio"></p>
+            <button id="followBtn" onclick="toggleFollow()">Follow</button>
+            <button onclick="logout()">Logout</button>
+            <p>
+                <strong>Followers:</strong> <span id="followersCount">0</span> |
+                <strong>Following:</strong> <span id="followingCount">0</span>
+            </p>
+        </div>
+
+        <hr>
+
+        <h3>Your Posts</h3>
+        <div id="createPostBox">
+            <textarea id="newPostContent" placeholder="What's on your mind?"></textarea>
+            <button onclick="createPost()">Post</button>
+        </div>
+
+        <div id="userPosts"></div>
+
+        <script src="profile.js"></script>
+    </body>
+</html>
